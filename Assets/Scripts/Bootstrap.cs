@@ -21,10 +21,11 @@ public class Bootstrap : MonoBehaviour
         manager.AddComponentData(player, new MovementSpeed() { Value = speed });
         manager.AddComponentData(player, new PlayerInput());
 
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        
+        //if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = (Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None);
     }
 }

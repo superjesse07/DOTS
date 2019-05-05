@@ -10,13 +10,15 @@ using UnityEngine;
 public class PlayerMovementSystem : JobComponentSystem
 {
     [BurstCompile]
-    struct PlayerMovementSystemJob : IJobForEach<PlayerInput,PhysicsVelocity,MovementSpeed>
+    struct PlayerMovementSystemJob : IJobForEach<PlayerInput,PhysicsVelocity,MovementSpeed,Rotation>
     {
 
-        public void Execute(ref PlayerInput pi, ref PhysicsVelocity vel,ref MovementSpeed speed)
+        public void Execute(ref PlayerInput pi, ref PhysicsVelocity vel,ref MovementSpeed speed,ref Rotation rot)
         {
-
-            vel.Linear = pi.vertical * new float3(0, 0, 1) * speed.Value;
+            quaternion q = rot.Value;
+            
+            vel.Linear = pi.vertical * math.forward(q) * speed.Value;
+            vel.Angular = float3(0, 1, 0) * pi.mouse.x + float3(1, 0, 0) * pi.mouse.y;
         }
     }
     
